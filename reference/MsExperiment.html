@@ -89,7 +89,7 @@ https://www.rformassspectrometry.org/" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MsExperiment</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -149,7 +149,13 @@ https://www.rformassspectrometry.org/</p>
 <span class='co'># S4 method for MsExperiment</span>
 <span class='fu'>spectra</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
-<span class='fu'>spectra</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
+<span class='fu'>spectra</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
+
+<span class='co'># S4 method for MsExperiment</span>
+<span class='fu'>metadata</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='co'># S4 method for MsExperiment</span>
+<span class='fu'>metadata</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,8 +166,11 @@ https://www.rformassspectrometry.org/</p>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>An object of the appropriate class for the slot to be
-populated.</p></td>
+      <td><p>A `list()` to replace the `MsExperiment`'s metadata.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>An instance of `MsExperiment`.</p></td>
     </tr>
     </table>
 
