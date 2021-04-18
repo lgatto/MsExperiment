@@ -42,7 +42,14 @@
 <meta property="og:title" content="A class to store experiment files — MsExperimentFiles" />
 <meta property="og:description" content="The `MsExperimentFiles` class stores files that are part of a mass
 spectrometry experiment. The objects are created with the
-`MsExperimentFiles()` function." />
+`MsExperimentFiles()` function.
+The files encoded in a `MsExperimentFiles` instance don't need to
+exist on the current filesystem - sometimes, these might be created
+in anticipation of their creation. The `existMsExperimentFiles()`
+function can be used to verify which ones currently exist: it
+returns a list of logicals (formally an instance of
+[IRanges::LogicalList()] of lenghts equal to the
+`MsExperimentFiles` used as input." />
 
 
 
@@ -119,7 +126,7 @@ spectrometry experiment. The objects are created with the
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A class to store experiment files</h1>
-    <small class="dont-index">Source: <a href='https://github.com/RforMassSpectrometry/MsExperiment/blob/master/R/MsExperimentFiles.R'><code>R/MsExperimentFiles.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/RforMassSpectrometry/MsExperiment/blob/master/R/MsExperimentFiles.R'><code>R/MsExperimentFiles.R</code></a>, <a href='https://github.com/RforMassSpectrometry/MsExperiment/blob/master/R/existMsExperimentFiles.R'><code>R/existMsExperimentFiles.R</code></a></small>
     <div class="hidden name"><code>MsExperimentFiles.Rd</code></div>
     </div>
 
@@ -127,12 +134,21 @@ spectrometry experiment. The objects are created with the
     <p>The `MsExperimentFiles` class stores files that are part of a mass
 spectrometry experiment. The objects are created with the
 `MsExperimentFiles()` function.</p>
+<p>The files encoded in a `MsExperimentFiles` instance don't need to
+exist on the current filesystem - sometimes, these might be created
+in anticipation of their creation. The `existMsExperimentFiles()`
+function can be used to verify which ones currently exist: it
+returns a list of logicals (formally an instance of
+[IRanges::LogicalList()] of lenghts equal to the
+`MsExperimentFiles` used as input.</p>
     </div>
 
     <pre class="usage"><span class='fu'>MsExperimentFiles</span><span class='op'>(</span><span class='va'>...</span>, metadata <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># S4 method for MsExperimentFiles</span>
-<span class='fu'>show</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
+<span class='fu'>show</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+
+<span class='fu'>existMsExperimentFiles</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,7 +165,8 @@ annotations.</p></td>
     </tr>
     <tr>
       <th>object</th>
-      <td><p>An instance of class `MsExperimentFiles`.</p></td>
+      <td><p>The `existMsExperimentFiles()` fonction works with
+either an instance of `MsExperimentFiles` or `MsExperiment`.</p></td>
     </tr>
     </table>
 
@@ -176,7 +193,12 @@ annotations.</p></td>
 <span class='va'>fls</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
 </div><div class='output co'>#&gt; [1] "/path/to/f1.mzML" "/path/to/f2.mzML"</div><div class='input'><span class='va'>fls</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
 </div><div class='output co'>#&gt; [1] "/another/path/to/id1.mzid"</div><div class='input'><span class='va'>fls</span><span class='op'>[[</span><span class='st'>"fasta"</span><span class='op'>]</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; [1] "file.fas"</div></pre>
+</div><div class='output co'>#&gt; [1] "file.fas"</div><div class='input'>
+<span class='co'>## None of the files used in this example actually exist</span>
+<span class='fu'>existMsExperimentFiles</span><span class='op'>(</span><span class='va'>fls</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>mzmls: 0 out of 2 exist(s)</span>
+#&gt; <span class='message'>mzids: 0 out of 1 exist(s)</span>
+#&gt; <span class='message'>fasta: 0 out of 1 exist(s)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

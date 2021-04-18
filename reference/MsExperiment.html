@@ -176,6 +176,9 @@ populated.</p></td>
   defined as `PSM()` objects. They are generally joined with the
   spectra data.</p>
 <p>- Quantification data is stored as `QFeatures()` objects.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Laurent Gatto</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -212,7 +215,12 @@ populated.</p></td>
 #&gt; [1] "/another/path/to/id1.mzid"
 #&gt; 
 #&gt; MsExpF&gt; fls[["fasta"]]
-#&gt; [1] "file.fas"</div><div class='input'><span class='fu'>experimentFiles</span><span class='op'>(</span><span class='va'>msexp</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>fls</span>
+#&gt; [1] "file.fas"
+#&gt; 
+#&gt; MsExpF&gt; ## None of the files used in this example actually exist
+#&gt; MsExpF&gt; existMsExperimentFiles(fls)</div><div class='output co'>#&gt; <span class='message'>mzmls: 0 out of 2 exist(s)</span>
+#&gt; <span class='message'>mzids: 0 out of 1 exist(s)</span>
+#&gt; <span class='message'>fasta: 0 out of 1 exist(s)</span></div><div class='input'><span class='fu'>experimentFiles</span><span class='op'>(</span><span class='va'>msexp</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>fls</span>
 <span class='va'>msexp</span>
 </div><div class='output co'>#&gt; Object of class MsExperiment 
 #&gt;  Files: mzmls, mzids, fasta </div></pre>
