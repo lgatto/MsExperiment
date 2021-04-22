@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MsExperiment</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/MsExperiment" class="external-link">MsExperiment</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut], Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-04-18 16:29:33<br><strong>Compiled</strong>: Sun Apr 18 16:35:56 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/MsExperiment" class="external-link">MsExperiment</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut], Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-04-22 11:48:33<br><strong>Compiled</strong>: Thu Apr 22 12:06:42 2021</p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -154,8 +154,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzML from cache.</code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fls</span></code></pre></div>
-<pre><code>## [1] "/github/home/.cache/R/rpx/5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzML"
-## [2] "/github/home/.cache/R/rpx/5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzML"</code></pre>
+<pre><code>## [1] "/github/home/.cache/R/rpx/874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzML"
+## [2] "/github/home/.cache/R/rpx/8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzML"</code></pre>
 </div>
 <div id="mass-spectrometry-experiment" class="section level1">
 <h1 class="hasAnchor">
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
                            fasta <span class="op">=</span> <span class="st">"homo_sapiens.fasta"</span><span class="op">)</span>
 <span class="va">msfls</span></code></pre></div>
 <pre><code>## MsExperimentFiles of length  2 
-## [["mzmls"]] 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzML ...
+## [["mzmls"]] 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzML ...
 ## [["fasta"]] homo_sapiens.fasta</code></pre>
 <p>Let’s add these files to the main experiment management object:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -183,11 +183,26 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## Object of class MsExperiment 
 ##  Files: mzmls, fasta</code></pre>
 </div>
+<div id="experimental-design" class="section level2">
+<h2 class="hasAnchor">
+<a href="#experimental-design" class="anchor"></a>Experimental design</h2>
+<p>The <code>colData</code> slot is used to describe the overall experimental design of the experiment. It can be used to link samples to the files that are part of the experiment. There can be a one-to-one link between a sample and a file, such as for example in label-free approaches, or one-to-many, in labelled multiplexed approaches.</p>
+<p>Here, we are simply going to use the <code>colData</code> slot to match the files to their respective fractions:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/MsExperiment.html">sampleData</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">DataFrame</span><span class="op">(</span>mzmls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="../reference/MsExperiment.html">experimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span><span class="op">[[</span><span class="st">"mzmls"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,
+                               fractions <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="../reference/MsExperiment.html">sampleData</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span></code></pre></div>
+<pre><code>## DataFrame with 2 rows and 2 columns
+##           mzmls fractions
+##     &lt;character&gt; &lt;integer&gt;
+## 1 874160b927...         1
+## 2 8745fdf32a...         2</code></pre>
+</div>
 <div id="raw-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#raw-data" class="anchor"></a>Raw data</h2>
 <p>We can now create a <code>Spectra</code> object containing the raw data stored in the mzML files. If you are not familiar with the <code>Spectra</code> object, please refer to the <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html" class="external-link">package vignettes</a>.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu">Spectra</span><span class="op">(</span><span class="fu"><a href="../reference/MsExperiment.html">experimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span><span class="op">[[</span><span class="st">"mzmls"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="va">sp</span></code></pre></div>
 <pre><code>## MSn data (Spectra) with 58907 spectra in a MsBackendMzR backend:
@@ -207,15 +222,16 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  ... 33 more variables/columns.
 ## 
 ## file(s):
-## 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzML
-## 5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzML</code></pre>
+## 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzML
+## 8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzML</code></pre>
 <p>We can now add this object to the main experiment management object:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">spectra</span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">sp</span>
 <span class="va">msexp</span></code></pre></div>
 <pre><code>## Object of class MsExperiment 
 ##  Files: mzmls, fasta 
-##  Spectra: 1 (12983) 2 (45924)</code></pre>
+##  Spectra: MS1 (12983) MS2 (45924) 
+##  Experiment data: 2 sample(s)</code></pre>
 </div>
 <div id="third-party-applications" class="section level2">
 <h2 class="hasAnchor">
@@ -231,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function() {
      -m 0 \     ## fragmentation method as written in the spectrum or CID if no info
      -int 1     ## Orbitrap/FTICR/Lumos</code></pre>
 <p>We can easily build such a command for each of our input file:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mzids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"mzML"</span>, <span class="st">"mzid"</span>, <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="../reference/MsExperiment.html">experimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span><span class="op">[[</span><span class="st">"mzmls"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"java -jar /path/to/MSGFPlus.jar"</span>,
        <span class="st">" -s "</span>, <span class="fu"><a href="../reference/MsExperiment.html">experimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span><span class="op">[[</span><span class="st">"mzmls"</span><span class="op">]</span><span class="op">]</span>,
@@ -240,47 +256,48 @@ document.addEventListener("DOMContentLoaded", function() {
        <span class="st">" -t 20ppm"</span>,
        <span class="st">" -m 0"</span>,
        <span class="st">" int 1"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "java -jar /path/to/MSGFPlus.jar -s /github/home/.cache/R/rpx/5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzML -o 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzid -d homo_sapiens.fasta -t 20ppm -m 0 int 1"
-## [2] "java -jar /path/to/MSGFPlus.jar -s /github/home/.cache/R/rpx/5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzML -o 5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzid -d homo_sapiens.fasta -t 20ppm -m 0 int 1"</code></pre>
+<pre><code>## [1] "java -jar /path/to/MSGFPlus.jar -s /github/home/.cache/R/rpx/874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzML -o 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzid -d homo_sapiens.fasta -t 20ppm -m 0 int 1"
+## [2] "java -jar /path/to/MSGFPlus.jar -s /github/home/.cache/R/rpx/8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzML -o 8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzid -d homo_sapiens.fasta -t 20ppm -m 0 int 1"</code></pre>
 <p>Here, for the sake of time and portability, we will not actually run MSGF+, but a simple shell script that will generate mzid files in a temporary R directory.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">mzids</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "/tmp/RtmpBELvD8/5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzid"
-## [2] "/tmp/RtmpBELvD8/5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzid"</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">mzids</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "/tmp/RtmpbJsAT2/874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzid"
+## [2] "/tmp/RtmpbJsAT2/8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzid"</code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cmd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"touch"</span>, <span class="va">output</span><span class="op">)</span>
 <span class="va">cmd</span></code></pre></div>
-<pre><code>## [1] "touch /tmp/RtmpBELvD8/5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzid"
-## [2] "touch /tmp/RtmpBELvD8/5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzid"</code></pre>
+<pre><code>## [1] "touch /tmp/RtmpbJsAT2/874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzid"
+## [2] "touch /tmp/RtmpbJsAT2/8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzid"</code></pre>
 <p>The <code>cmd</code> variable holds the two commands to be run on the command line that will generate the new files. We can run each of these commands with the <code><a href="https://rdrr.io/r/base/system.html" class="external-link">system()</a></code> function.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">cmd</span>, <span class="va">system</span><span class="op">)</span></code></pre></div>
-<pre><code>## touch /tmp/RtmpBELvD8/5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzid 
+<pre><code>## touch /tmp/RtmpbJsAT2/874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzid 
 ##                                                                        0 
-## touch /tmp/RtmpBELvD8/5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzid 
+## touch /tmp/RtmpbJsAT2/8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzid 
 ##                                                                        0</code></pre>
 <p>Below, we add the names of the newly created files to our experiment:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/MsExperiment.html">experimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span><span class="op">[[</span><span class="st">"mzids"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">mzids</span>
 <span class="fu"><a href="../reference/MsExperiment.html">experimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span></code></pre></div>
 <pre><code>## MsExperimentFiles of length  3 
-## [["mzmls"]] 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzML ...
+## [["mzmls"]] 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzML ...
 ## [["fasta"]] homo_sapiens.fasta
-## [["mzids"]] 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzid ...</code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+## [["mzids"]] 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzid ...</code></pre>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">msexp</span></code></pre></div>
 <pre><code>## Object of class MsExperiment 
 ##  Files: mzmls, fasta, mzids 
-##  Spectra: 1 (12983) 2 (45924)</code></pre>
+##  Spectra: MS1 (12983) MS2 (45924) 
+##  Experiment data: 2 sample(s)</code></pre>
 <p>We can also decide to store the commands that were used to generate the mzid files in the experiment’s metadata slot. Here, we use the convention to name that metadata item <code>"mzmls_to_mzids"</code> to document to input and output of these commands.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">metadata</span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span><span class="op">[[</span><span class="st">"mzmls_to_mzids"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">cmd</span>
 <span class="fu">metadata</span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span></code></pre></div>
 <pre><code>## $mzmls_to_mzids
-## [1] "touch /tmp/RtmpBELvD8/5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzid"
-## [2] "touch /tmp/RtmpBELvD8/5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzid"</code></pre>
+## [1] "touch /tmp/RtmpbJsAT2/874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzid"
+## [2] "touch /tmp/RtmpbJsAT2/8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzid"</code></pre>
 <p>Finally, the <code><a href="../reference/MsExperimentFiles.html">existMsExperimentFiles()</a></code> can be used at any time to check which of files that are associated with an experiment actually exist:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/MsExperimentFiles.html">existMsExperimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span></code></pre></div>
 <pre><code>## mzmls: 2 out of 2 exist(s)
 ## fasta: 0 out of 1 exist(s)
@@ -291,23 +308,24 @@ document.addEventListener("DOMContentLoaded", function() {
 <h1 class="hasAnchor">
 <a href="#conclusions" class="anchor"></a>Conclusions</h1>
 <p>The <code>MsExperiment</code> object has been used to store files and data pertaining to a mass spectrometry experiment. It is now possible to save that object and reload it later to recover all data and metadata.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">msexp</span>, <span class="st">"msexp.rda"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">msexp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"msexp.rda"</span><span class="op">)</span>
 <span class="va">msexp</span></code></pre></div>
 <pre><code>## Object of class MsExperiment 
 ##  Files: mzmls, fasta, mzids 
-##  Spectra: 1 (12983) 2 (45924)</code></pre>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+##  Spectra: MS1 (12983) MS2 (45924) 
+##  Experiment data: 2 sample(s)</code></pre>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/MsExperiment.html">experimentFiles</a></span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span></code></pre></div>
 <pre><code>## MsExperimentFiles of length  3 
-## [["mzmls"]] 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzML ...
+## [["mzmls"]] 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzML ...
 ## [["fasta"]] homo_sapiens.fasta
-## [["mzids"]] 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzid ...</code></pre>
+## [["mzids"]] 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzid ...</code></pre>
 <p>We can access the raw data as long as the mzML files that were used to generate it still exist in their original location, which is the case here as they were saved in the <code>rpx</code> cache directory.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu">spectra</span><span class="op">(</span><span class="va">msexp</span><span class="op">)</span>
 <span class="va">sp</span></code></pre></div>
 <pre><code>## MSn data (Spectra) with 58907 spectra in a MsBackendMzR backend:
@@ -327,16 +345,16 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  ... 33 more variables/columns.
 ## 
 ## file(s):
-## 5f94f8ff262_QEP2LC6_HeLa_50ng_251120_01-calib.mzML
-## 5f94573196a_QEP2LC6_HeLa_50ng_251120_02-calib.mzML</code></pre>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+## 874160b927f_QEP2LC6_HeLa_50ng_251120_01-calib.mzML
+## 8745fdf32a9_QEP2LC6_HeLa_50ng_251120_02-calib.mzML</code></pre>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">plotSpectra</span><span class="op">(</span><span class="va">sp</span><span class="op">[</span><span class="fl">1000</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p><img src="MsExperiment_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="MsExperiment_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 </div>
 <div id="session-information" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## R Under development (unstable) (2021-04-15 r80175)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
@@ -358,8 +376,8 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [8] methods   base     
 ## 
 ## other attached packages:
-## [1] rpx_1.99.6          Spectra_1.1.18      BiocParallel_1.25.5
-## [4] S4Vectors_0.29.15   BiocGenerics_0.37.2 MsExperiment_0.4.1 
+## [1] rpx_1.99.6          Spectra_1.1.20      BiocParallel_1.25.5
+## [4] S4Vectors_0.29.15   BiocGenerics_0.37.2 MsExperiment_0.5.0 
 ## [7] ProtGenerics_1.23.9 BiocStyle_2.19.2   
 ## 
 ## loaded via a namespace (and not attached):
@@ -394,12 +412,12 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [57] SummarizedExperiment_1.21.3  zlibbioc_1.37.0             
 ## [59] BiocFileCache_1.99.6         grid_4.1.0                  
 ## [61] blob_1.2.1                   crayon_1.4.1                
-## [63] lattice_0.20-41              mzR_2.25.3                  
+## [63] lattice_0.20-41              mzR_2.25.4                  
 ## [65] knitr_1.32                   pillar_1.6.0                
 ## [67] GenomicRanges_1.43.4         QFeatures_1.1.3             
 ## [69] codetools_0.2-18             glue_1.4.2                  
 ## [71] evaluate_0.14                BiocManager_1.30.12         
-## [73] MultiAssayExperiment_1.17.21 vctrs_0.3.7                 
+## [73] MultiAssayExperiment_1.17.22 vctrs_0.3.7                 
 ## [75] purrr_0.3.4                  clue_0.3-59                 
 ## [77] assertthat_0.2.1             cachem_1.0.4                
 ## [79] xfun_0.22                    AnnotationFilter_1.15.0     

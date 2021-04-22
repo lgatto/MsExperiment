@@ -40,10 +40,11 @@
 
 
 <meta property="og:title" content="Managing Mass Spectrometry Experiments — MsExperiment" />
-<meta property="og:description" content="The `MsExperiment` class allows the storage, management and processing of all
-aspects related to a complete proteomics or metabolomics mass spectrometry
-experiment. This includes experimantal design, raw mass spectromtry data as
-spectra and chromatograms, quantitative features, and identification data.
+<meta property="og:description" content="The `MsExperiment` class allows the storage and management of all
+aspects related to a complete proteomics or metabolomics mass
+spectrometry experiment. This includes experimantal design, raw
+mass spectromtry data as spectra and chromatograms, quantitative
+features, and identification data.
 For details, see https://rformassspectrometry.github.io/MsExperiment
 This package is part of the RforMassSpectrometry initiative:
 https://www.rformassspectrometry.org/" />
@@ -89,7 +90,7 @@ https://www.rformassspectrometry.org/" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MsExperiment</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -128,10 +129,11 @@ https://www.rformassspectrometry.org/" />
     </div>
 
     <div class="ref-description">
-    <p>The `MsExperiment` class allows the storage, management and processing of all
-aspects related to a complete proteomics or metabolomics mass spectrometry
-experiment. This includes experimantal design, raw mass spectromtry data as
-spectra and chromatograms, quantitative features, and identification data.</p>
+    <p>The `MsExperiment` class allows the storage and management of all
+aspects related to a complete proteomics or metabolomics mass
+spectrometry experiment. This includes experimantal design, raw
+mass spectromtry data as spectra and chromatograms, quantitative
+features, and identification data.</p>
 <p>For details, see https://rformassspectrometry.github.io/MsExperiment</p>
 <p>This package is part of the RforMassSpectrometry initiative:
 https://www.rformassspectrometry.org/</p>
@@ -145,6 +147,10 @@ https://www.rformassspectrometry.org/</p>
 <span class='fu'>experimentFiles</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
 <span class='fu'>experimentFiles</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
+
+<span class='fu'>sampleData</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+
+<span class='fu'>sampleData</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S4 method for MsExperiment</span>
 <span class='fu'>spectra</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
@@ -176,15 +182,39 @@ https://www.rformassspectrometry.org/</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>- Data files stored in a [MsExperimentFiles()] object.</p>
-<p>- Metadata: ...</p>
-<p>- Mass spectrometry data, i.e. spectra and their metadata are
-  stored as `Spectra()` objects.</p>
-<p>- Chromatographic data will be stored as `Chromatograms()` objects.</p>
-<p>- Proteomics identification data, i.e peptide-spectrum matches is
-  defined as `PSM()` objects. They are generally joined with the
-  spectra data.</p>
-<p>- Quantification data is stored as `QFeatures()` objects.</p>
+    <p>An experiment is typically composed of several items</p>
+<p>- Files to data or annotations. There are stored in the
+  `experimentFiles` slot as an instance of class `MsExperimentFiles`.</p>
+<p>- General metadata about the experiment, stored as a `list` in the
+  `metadata` slot.</p>
+<p>- Mass spectrometry data. Sectra and their metadata are stored as
+  `Spectra()` objects in the `spectra` object. Chromatographic is
+  noy yet supported but will be stored as `Chromatograms()` objects
+  in the `chromatorgrams` slot.</p>
+<p>- Quantification data is stored as `QFeatures()` objects in the
+  `qfeatures` slot.</p>
+<p>- Any additional data, be it other spectra data, or proteomics
+  identification data, i.e peptide-spectrum matches is defined as
+  `PSM()` objects can be added as elements to the list stored in
+  the `otherData` slot.</p>
+    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
+
+    
+
+<dl>
+<dt><code>experimentFiles</code></dt><dd><p>An instance of class `MsExperimentFiles` or `NULL`.</p></dd>
+
+<dt><code>spectra</code></dt><dd><p>An instance of class `Spectra` or `NULL`.</p></dd>
+
+<dt><code>qfeatures</code></dt><dd><p>An instance of class `QFeatures` or `NULL`.</p></dd>
+
+<dt><code>otherData</code></dt><dd><p>A `List` to store any additional data objects.</p></dd>
+
+<dt><code>sampleData</code></dt><dd><p>A `DataFrame` documenting the experimental design.</p></dd>
+
+<dt><code>metadata</code></dt><dd><p>A `list` to store additional metadata.</p></dd>
+
+</dl>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Laurent Gatto</p>
