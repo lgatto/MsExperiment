@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Managing Mass Spectrometry Experiments — MsExperiment • MsExperiment</title>
+<title>Managing Mass Spectrometry Experiments — experimentFiles • MsExperiment</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,12 @@
 
 
 
-<meta property="og:title" content="Managing Mass Spectrometry Experiments — MsExperiment" />
-<meta property="og:description" content="The `MsExperiment` class allows the storage and management of all
+<meta property="og:title" content="Managing Mass Spectrometry Experiments — experimentFiles" />
+<meta property="og:description" content="The MsExperiment class allows the storage and management of all
 aspects related to a complete proteomics or metabolomics mass
 spectrometry experiment. This includes experimantal design, raw
 mass spectromtry data as spectra and chromatograms, quantitative
-features, and identification data.
+features, and identification data or any other relevant data files.
 For details, see https://rformassspectrometry.github.io/MsExperiment
 This package is part of the RforMassSpectrometry initiative:
 https://www.rformassspectrometry.org/" />
@@ -90,7 +90,7 @@ https://www.rformassspectrometry.org/" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MsExperiment</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -124,145 +124,388 @@ https://www.rformassspectrometry.org/" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Managing Mass Spectrometry Experiments</h1>
-    <small class="dont-index">Source: <a href='https://github.com/RforMassSpectrometry/MsExperiment/blob/master/R/MsExperiment.R'><code>R/MsExperiment.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/RforMassSpectrometry/MsExperiment/blob/master/R/MsExperiment-functions.R'><code>R/MsExperiment-functions.R</code></a>, <a href='https://github.com/RforMassSpectrometry/MsExperiment/blob/master/R/MsExperiment.R'><code>R/MsExperiment.R</code></a></small>
     <div class="hidden name"><code>MsExperiment.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `MsExperiment` class allows the storage and management of all
+    <p>The <code>MsExperiment</code> class allows the storage and management of all
 aspects related to a complete proteomics or metabolomics mass
 spectrometry experiment. This includes experimantal design, raw
 mass spectromtry data as spectra and chromatograms, quantitative
-features, and identification data.</p>
+features, and identification data or any other relevant data files.</p>
 <p>For details, see https://rformassspectrometry.github.io/MsExperiment</p>
 <p>This package is part of the RforMassSpectrometry initiative:
 https://www.rformassspectrometry.org/</p>
     </div>
 
-    <pre class="usage"><span class='fu'>MsExperiment</span><span class='op'>(</span><span class='op'>)</span>
+    <pre class="usage">experimentFiles(object)
 
-<span class='co'># S4 method for MsExperiment</span>
-<span class='fu'>show</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+experimentFiles(object) &lt;- value
 
-<span class='fu'>experimentFiles</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+sampleData(object)
 
-<span class='fu'>experimentFiles</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
+sampleData(object) &lt;- value
 
-<span class='fu'>sampleData</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+MsExperiment()
 
-<span class='fu'>sampleData</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
+# S4 method for MsExperiment
+show(object)
 
-<span class='co'># S4 method for MsExperiment</span>
-<span class='fu'>spectra</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+# S4 method for MsExperiment
+spectra(object)
 
-<span class='fu'>spectra</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
+spectra(object) &lt;- value
 
-<span class='co'># S4 method for MsExperiment</span>
-<span class='fu'>metadata</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+# S4 method for MsExperiment
+metadata(x)
 
-<span class='co'># S4 method for MsExperiment</span>
-<span class='fu'>metadata</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
+# S4 method for MsExperiment
+metadata(x) &lt;- value
+
+linkSampleData(
+  object,
+  with = character(),
+  sampleIndex = seq_len(nrow(sampleData(object))),
+  withIndex = integer(),
+  subsetBy = 1L
+)
+
+# S4 method for MsExperiment,ANY,ANY,ANY
+[(x, i, j, ..., drop = FALSE)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An instance of class `MsExperiment`</p></td>
+      <td><p>An instance of class <code>MsExperiment</code>.</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>A `list()` to replace the `MsExperiment`'s metadata.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> to replace the <code>MsExperiment</code>'s metadata.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>An instance of `MsExperiment`.</p></td>
+      <td><p>An instance of <code>MsExperiment</code>.</p></td>
+    </tr>
+    <tr>
+      <th>with</th>
+      <td><p>for <code>linkSampleData</code>: <code>character(1)</code> defining the data to which
+samples should be linked. See section <em>Linking sample data to other
+experimental data</em> for details.</p></td>
+    </tr>
+    <tr>
+      <th>sampleIndex</th>
+      <td><p>for <code>linkSampleData</code>: <code>integer</code> with the indices of the
+samples in <code>sampleData(object)</code> that should be linked.</p></td>
+    </tr>
+    <tr>
+      <th>withIndex</th>
+      <td><p>for <code>linkSampleData</code>: <code>integer</code> with the indices of the
+elements in <code>with</code> to which the samples (specified by <code>sampleIndex</code>)
+should be linked to.</p></td>
+    </tr>
+    <tr>
+      <th>subsetBy</th>
+      <td><p>for <code>linkSampleData</code>: optional <code>integer(1)</code> defining the
+dimension on which the subsetting will occurr on the linked data.
+Defaults to <code>subsetBy = 1L</code> thus subsetting will happen on the first
+dimension (rows or elements).</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>for <code>[</code>: not supported.</p></td>
+    </tr>
+    <tr>
+      <th>j</th>
+      <td><p>for <code>[</code>: an <code>integer</code>, <code>character</code> or <code>logical</code> referring to the
+indices or names (rowname of <code>sampleData</code>) of the samples to subset.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>optional additional parameters.</p></td>
+    </tr>
+    <tr>
+      <th>drop</th>
+      <td><p>for <code>[</code>: ignored.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>An experiment is typically composed of several items</p>
-<p>- Files to data or annotations. There are stored in the
-  `experimentFiles` slot as an instance of class `MsExperimentFiles`.</p>
-<p>- General metadata about the experiment, stored as a `list` in the
-  `metadata` slot.</p>
-<p>- Mass spectrometry data. Sectra and their metadata are stored as
-  `Spectra()` objects in the `spectra` object. Chromatographic is
-  noy yet supported but will be stored as `Chromatograms()` objects
-  in the `chromatorgrams` slot.</p>
-<p>- Quantification data is stored as `QFeatures()` objects in the
-  `qfeatures` slot.</p>
-<p>- Any additional data, be it other spectra data, or proteomics
-  identification data, i.e peptide-spectrum matches is defined as
-  `PSM()` objects can be added as elements to the list stored in
-  the `otherData` slot.</p>
     <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
     
 
 <dl>
-<dt><code>experimentFiles</code></dt><dd><p>An instance of class `MsExperimentFiles` or `NULL`.</p></dd>
+<dt><code>experimentFiles</code></dt><dd><p>An instance of class <code>MsExperimentFiles</code> or <code>NULL</code>.</p></dd>
 
-<dt><code>spectra</code></dt><dd><p>An instance of class `Spectra` or `NULL`.</p></dd>
+<dt><code>spectra</code></dt><dd><p>An instance of class <code>Spectra</code> or <code>NULL</code>.</p></dd>
 
-<dt><code>qfeatures</code></dt><dd><p>An instance of class `QFeatures` or `NULL`.</p></dd>
+<dt><code>assay</code></dt><dd><p>An instance of class <code>QFeatures</code>,
+<code>SummarizedExperiment</code> or <code>NULL</code>.</p></dd>
 
-<dt><code>otherData</code></dt><dd><p>A `List` to store any additional data objects.</p></dd>
+<dt><code>otherData</code></dt><dd><p>A <code>List</code> to store any additional data objects.</p></dd>
 
-<dt><code>sampleData</code></dt><dd><p>A `DataFrame` documenting the experimental design.</p></dd>
+<dt><code>sampleData</code></dt><dd><p>A <code>DataFrame</code> documenting the experimental design.</p></dd>
 
-<dt><code>metadata</code></dt><dd><p>A `list` to store additional metadata.</p></dd>
+<dt><code>sampleDataLinks</code></dt><dd><p>A <code>List</code> with link definitions between samples and
+data elements. Should not be directly accessed or modified by the user.</p></dd>
+
+<dt><code>metadata</code></dt><dd><p>A <code>list</code> to store additional metadata.</p></dd>
 
 </dl>
+    <h2 class="hasAnchor" id="general-information"><a class="anchor" href="#general-information"></a>General information</h2>
+
+    
+
+
+<p>An experiment is typically composed of several items</p><ul>
+<li><p>Description and information (covariates etc) of each sample from
+the experiment. These are stored in the <code>sampleData</code> slot as a
+<code>DataFrame</code>, each row describing a sample with columns containing
+all relevant information on that sample.</p></li>
+<li><p>Files to data or annotations. These are stored in the
+<code>experimentFiles</code> slot as an instance of class <code>MsExperimentFiles</code>.</p></li>
+<li><p>General metadata about the experiment, stored as a <code>list</code> in the
+<code>metadata</code> slot.</p></li>
+<li><p>Mass spectrometry data. Sectra and their metadata are stored as
+an <code><a href='https://rdrr.io/pkg/Spectra/man/Spectra.html'>Spectra()</a></code> object in the <code>spectra</code> slot. Chromatographic data
+is not yet supported but will be stored as a <code>Chromatograms()</code>
+object in the <code>chromatorgrams</code> slot.</p></li>
+<li><p>Quantification data is stored as <code>QFeatures</code> or
+<code>SummarizedExperiment</code> objects in the <code>assay</code> slot.</p></li>
+<li><p>Any additional data, be it other spectra data, or proteomics
+identification data (i.e peptide-spectrum matches defined as
+<code>PSM()</code> objects) can be added as elements to the list stored in
+the <code>otherData</code> slot.</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="linking-sample-data-to-other-experimental-data"><a class="anchor" href="#linking-sample-data-to-other-experimental-data"></a>Linking sample data to other experimental data</h2>
+
+    
+
+
+<p>To start with, an <code>MsExperiment</code> is just a loose collection of files and data
+related to an experiment, no explicit links or associactions are present
+between the samples and related data. Such links can however be created with
+the <code><a href='MsExperiment.html'>linkSampleData()</a></code> function. This function can establish links between
+individual (or all) samples within the object's <code>sampleData</code> to individual,
+or multiple, data elements or files, such as <code>Spectra</code> or raw data files.</p>
+<p>The presence of such links enables a (consistent) subsetting of an
+<code>MsExperiment</code> by samples. Thus, once the link is defined, any subsetting by
+sample will also correctly subset the linked data. All other, not linked,
+data elements are always retained as in the original <code>MsExperiment</code>.</p>
+<p>To be able to link different elements within an <code>MsExperiment</code> it is also
+required to <em>identify</em> them with a consistent naming scheme. The naming
+scheme of slots and data elements within follows an SQL-like scheme, in which
+the variable (element) is identified by the name of the database table,
+followed by a <code>"."</code> and the name of the database table column. For
+<code>MsExperiment</code>, the naming scheme is defined as
+<code>"&lt;slot name&gt;.&lt;element name&gt;"</code>. A column called <code>"sample_name"</code> within the
+<code>sampleData</code> data frame can thus be addressed with
+<code>"sampleData.sample_name"</code>, while <code>spectra.msLevel</code> would represent the
+spectra variable called <code>msLevel</code> within the <code>Spectra</code> stored in the
+<code>spectra</code> slot.</p>
+<p>Links between sample data rows and any other data element are stored as
+<code>integer</code> matrices within the <code>sampleDataLinks</code> slot of the object (see also
+the vignette for examples and illustrations). Such links can be defined/added
+with the <code>linkSampleData</code> function which adds a relationship between rows in
+<code>sampleData</code> to elements in any other data within the <code>MsExperiment</code> that
+are specified with parameter <code>with</code>. <code>linkSampleData</code> supports two different
+ways to define the link:</p><ul>
+<li><p>Parameter <code>with</code> defines the data to which the link should be established.
+To link samples to raw data files that would for example be available as a
+<code>character</code> in an element called <code>"raw_files"</code> within the object's
+<code>experimentFiles</code>, <code>with = experimentFiles.raw_files</code> would have to be
+used. Next it is required to specify which samples should be linked with
+which elements in <code>with</code>. This needs to be defined with the parameters
+<code>sampleIndex</code> and <code>withIndex</code>, both are expected to be <code>integer</code> vectors
+specifying which sample in <code>sampleData</code> should be linked to which element
+in <code>with</code> (see examples below or vignette for examples and details).</p></li>
+<li><p>As an alternative way, a link could be defined with an SQL-like syntax
+that relates a column in <code>sampleData</code> to a column/element in the data to
+which the link should be established. To link for example individual
+spectra to the corresponding samples
+<code>with = "sampleData.raw_file = spectra.dataOrigin"</code> could be used assuming
+that <code>sampleData</code> contains a column named <code>"raw_file"</code> with the (full path)
+of the raw data file for each sample from which the spectra were imported.
+In this case both <code>sampleIndex</code> and <code>withIndex</code> can be omitted, but it is
+expected/required that the columns/elements from <code>sampleData</code> and the data
+element to which the link should be established contain matching values.</p></li>
+</ul>
+
+<p>Note that <code>linkSampleData</code> will <strong>replace</strong> a previously existing link to the
+same data element.</p>
+    <h2 class="hasAnchor" id="subsetting-and-filtering"><a class="anchor" href="#subsetting-and-filtering"></a>Subsetting and filtering</h2>
+
+    
+
+<ul>
+<li><p><code>[</code>: <code>MsExperiment</code> objects can be subsetted <strong>by samples</strong> with <code>[, j]</code>
+where <code>j</code> is the index or a logical defining to which samples the data
+should be subsetted. Subsetting by sample will (correctly) subset all
+linked data to the respective samples. Not linked data (slots) will be
+returned as they are. Subsetting in arbitrary order is supported.
+See the vignette for details and examples.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Laurent Gatto</p>
+    <p>Laurent Gatto, Johannes Rainer</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## An empty MsExperiment object</span>
-<span class='va'>msexp</span> <span class='op'>&lt;-</span> <span class='fu'>MsExperiment</span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>msexp</span>
-</div><div class='co'>#&gt; Object of class MsExperiment </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='va'>MsExperimentFiles</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; MsExpF&gt; fls &lt;- MsExperimentFiles(mzmls = c("/path/to/f1.mzML", "/path/to/f2.mzML"),
-#&gt; MsExpF+                          mzids = "/another/path/to/id1.mzid",
-#&gt; MsExpF+                          fasta = "file.fas")
-#&gt; 
-#&gt; MsExpF&gt; fls
-#&gt; MsExperimentFiles of length  3 
-#&gt; [["mzmls"]] f1.mzML f2.mzML
-#&gt; [["mzids"]] id1.mzid
-#&gt; [["fasta"]] file.fas
-#&gt; 
-#&gt; MsExpF&gt; ## A new MsExperimentFiles containing mzML or mzid files
-#&gt; MsExpF&gt; fls[1]
-#&gt; MsExperimentFiles of length  1 
-#&gt; [["mzmls"]] f1.mzML f2.mzML
-#&gt; 
-#&gt; MsExpF&gt; fls["mzids"]
-#&gt; MsExperimentFiles of length  1 
-#&gt; [["mzids"]] id1.mzid
-#&gt; 
-#&gt; MsExpF&gt; ## The actual file names
-#&gt; MsExpF&gt; fls[[1]]
-#&gt; [1] "/path/to/f1.mzML" "/path/to/f2.mzML"
-#&gt; 
-#&gt; MsExpF&gt; fls[[2]]
-#&gt; [1] "/another/path/to/id1.mzid"
-#&gt; 
-#&gt; MsExpF&gt; fls[["fasta"]]
-#&gt; [1] "file.fas"
-#&gt; 
-#&gt; MsExpF&gt; ## None of the files used in this example actually exist
-#&gt; MsExpF&gt; existMsExperimentFiles(fls)</div><div class='co'>#&gt; mzmls: 0 out of 2 exist(s)
-#&gt; mzids: 0 out of 1 exist(s)
-#&gt; fasta: 0 out of 1 exist(s)</div><div class='input'><span class='fu'>experimentFiles</span><span class='op'>(</span><span class='va'>msexp</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>fls</span>
-<span class='va'>msexp</span>
-</div><div class='co'>#&gt; Object of class MsExperiment 
-#&gt;  Files: mzmls, mzids, fasta </div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## An empty MsExperiment object</span></span>
+<span class='r-in'><span class='va'>msexp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='MsExperiment.html'>MsExperiment</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>msexp</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class MsExperiment </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='va'>MsExperimentFiles</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; fls &lt;- MsExperimentFiles(mzmls = c("/path/to/f1.mzML", "/path/to/f2.mzML"),</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF+                          mzids = "/another/path/to/id1.mzid",</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF+                          fasta = "file.fas")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; fls</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExperimentFiles of length  3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [["mzmls"]] f1.mzML f2.mzML</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [["mzids"]] id1.mzid</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [["fasta"]] file.fas</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; ## A new MsExperimentFiles containing mzML or mzid files</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; fls[1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExperimentFiles of length  1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [["mzmls"]] f1.mzML f2.mzML</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; fls["mzids"]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExperimentFiles of length  1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [["mzids"]] id1.mzid</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; ## The actual file names</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; fls[[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/path/to/f1.mzML" "/path/to/f2.mzML"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; fls[[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/another/path/to/id1.mzid"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; fls[["fasta"]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "file.fas"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; ## None of the files used in this example actually exist</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> MsExpF&gt; existMsExperimentFiles(fls)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> mzmls: 0 out of 2 exist(s)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> mzids: 0 out of 1 exist(s)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> fasta: 0 out of 1 exist(s)</span>
+<span class='r-in'><span class='fu'><a href='MsExperiment.html'>experimentFiles</a></span><span class='op'>(</span><span class='va'>msexp</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>fls</span></span>
+<span class='r-in'><span class='va'>msexp</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class MsExperiment </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Files: mzmls, mzids, fasta </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Linking samples to data elements</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Create a small experiment</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://bioconductor.org/packages/S4Vectors'>S4Vectors</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: stats4</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: BiocGenerics</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: parallel</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘BiocGenerics’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:parallel’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     clusterExport, clusterMap, parApply, parCapply, parLapply,</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     parLapplyLB, parRapply, parSapply, parSapplyLB</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:stats’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     IQR, mad, sd, var, xtabs</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     anyDuplicated, append, as.data.frame, basename, cbind, colnames,</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     union, unique, unsplit, which.max, which.min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘S4Vectors’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     expand.grid, I, unname</span>
+<span class='r-in'><span class='va'>mse</span> <span class='op'>&lt;-</span> <span class='fu'><a href='MsExperiment.html'>MsExperiment</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>sd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></span><span class='op'>(</span>sample_id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='st'>"QC1"</span>, <span class='st'>"QC2"</span><span class='op'>)</span>,</span>
+<span class='r-in'>                sample_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='st'>"QC Pool"</span>, <span class='st'>"QC Pool"</span><span class='op'>)</span>,</span>
+<span class='r-in'>                injection_idx <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='MsExperiment.html'>sampleData</a></span><span class='op'>(</span><span class='va'>mse</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>sd</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## define file names containing spectra data for the samples and</span></span>
+<span class='r-in'><span class='co'>## add them, along with other arbitrary files to the experiment</span></span>
+<span class='r-in'><span class='va'>fls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"sciex"</span>, package <span class='op'>=</span> <span class='st'>"msdata"</span><span class='op'>)</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='MsExperiment.html'>experimentFiles</a></span><span class='op'>(</span><span class='va'>mse</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='MsExperimentFiles.html'>MsExperimentFiles</a></span><span class='op'>(</span></span>
+<span class='r-in'>    mzML_files <span class='op'>=</span> <span class='va'>fls</span>,</span>
+<span class='r-in'>    annotations <span class='op'>=</span> <span class='st'>"internal_standards.txt"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Link samples to data files: first sample to first file in "mzML_files",</span></span>
+<span class='r-in'><span class='co'>## second sample to second file in "mzML_files"</span></span>
+<span class='r-in'><span class='va'>mse</span> <span class='op'>&lt;-</span> <span class='fu'><a href='MsExperiment.html'>linkSampleData</a></span><span class='op'>(</span><span class='va'>mse</span>, with <span class='op'>=</span> <span class='st'>"experimentFiles.mzML_files"</span>,</span>
+<span class='r-in'>    sampleIndex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, withIndex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Link all samples to the one file in "annotations"</span></span>
+<span class='r-in'><span class='va'>mse</span> <span class='op'>&lt;-</span> <span class='fu'><a href='MsExperiment.html'>linkSampleData</a></span><span class='op'>(</span><span class='va'>mse</span>, with <span class='op'>=</span> <span class='st'>"experimentFiles.annotations"</span>,</span>
+<span class='r-in'>    sampleIndex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, withIndex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mse</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class MsExperiment </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Files: mzML_files, annotations </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Experiment data: 2 sample(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Sample data links:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - experimentFiles.mzML_files: 2 sample(s) to 2 element(s).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - experimentFiles.annotations: 2 sample(s) to 1 element(s).</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Import the spectra data and add it to the experiment</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/RforMassSpectrometry/Spectra'>Spectra</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: BiocParallel</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html'>spectra</a></span><span class='op'>(</span><span class='va'>mse</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/Spectra/man/Spectra.html'>Spectra</a></span><span class='op'>(</span><span class='va'>fls</span>, backend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/Spectra/man/MsBackend.html'>MsBackendMzR</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Link each spectrum to the respective sample. We use the alternative</span></span>
+<span class='r-in'><span class='co'>## link definition that does not require sampleIndex and withIndex but</span></span>
+<span class='r-in'><span class='co'>## links elements based on matching values in the specified data elements.</span></span>
+<span class='r-in'><span class='co'>## We need to add the full file name as an additional column to sampleData</span></span>
+<span class='r-in'><span class='co'>## in order to allow matching this file names with the value in</span></span>
+<span class='r-in'><span class='co'>## spectra(mse)$dataOrigin which contains the original file names from which</span></span>
+<span class='r-in'><span class='co'>## the spectra were imported.</span></span>
+<span class='r-in'><span class='fu'><a href='MsExperiment.html'>sampleData</a></span><span class='op'>(</span><span class='va'>mse</span><span class='op'>)</span><span class='op'>$</span><span class='va'>raw_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/normalizePath.html'>normalizePath</a></span><span class='op'>(</span><span class='va'>fls</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## The links can be added using the short notation below</span></span>
+<span class='r-in'><span class='va'>mse</span> <span class='op'>&lt;-</span> <span class='fu'><a href='MsExperiment.html'>linkSampleData</a></span><span class='op'>(</span><span class='va'>mse</span>, with <span class='op'>=</span> <span class='st'>"sampleData.raw_file = spectra.dataOrigin"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mse</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class MsExperiment </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Files: mzML_files, annotations </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Spectra: MS1 (1862) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Experiment data: 2 sample(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Sample data links:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - experimentFiles.mzML_files: 2 sample(s) to 2 element(s).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - experimentFiles.annotations: 2 sample(s) to 1 element(s).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - spectra: 2 sample(s) to 1862 element(s).</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## With sampleData links present, any subsetting of the experiment by sample</span></span>
+<span class='r-in'><span class='co'>## will ensure that all linked elements are subsetted accordingly</span></span>
+<span class='r-in'><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='va'>mse</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>b</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Object of class MsExperiment </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Files: mzML_files, annotations </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Spectra: MS1 (931) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Experiment data: 1 sample(s)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Sample data links:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - experimentFiles.mzML_files: 1 sample(s) to 1 element(s).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - experimentFiles.annotations: 1 sample(s) to 1 element(s).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - spectra: 1 sample(s) to 931 element(s).</span>
+<span class='r-in'><span class='fu'><a href='MsExperiment.html'>sampleData</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DataFrame with 1 row and 4 columns</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     sample_id sample_name injection_idx      raw_file</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   &lt;character&gt; &lt;character&gt;     &lt;numeric&gt;   &lt;character&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         QC2     QC Pool             3 /usr/local...</span>
+<span class='r-in'><span class='fu'><a href='MsExperiment.html'>experimentFiles</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>$</span><span class='va'>mzML_files</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/usr/local/lib/R/host-site-library/msdata/sciex/20171016_POOL_POS_3_105-134.mzML"</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
